@@ -1,5 +1,7 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { DataSourceOptions } from 'typeorm';
+import { SurveyEntity } from './entities/survey.entity';
+import { QuestionEntity } from './entities/question.entity';
 
 export const dataSourceOption: DataSourceOptions & TypeOrmModuleOptions = {
   type: 'postgres',
@@ -8,8 +10,7 @@ export const dataSourceOption: DataSourceOptions & TypeOrmModuleOptions = {
   username: process.env.DB_USER || 'postgres',
   database: process.env.DB_DATABASE || 'Survey',
   password: process.env.DB_PASSWORD || 'postgres',
-  entities: [],
+  entities: [QuestionEntity, SurveyEntity],
   synchronize: true,
-  autoLoadEntities: true,
   logging: true,
 };
