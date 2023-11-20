@@ -6,6 +6,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { dataSourceOption } from './database/dataSource';
+import { SurveyModule } from './survey/survey.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { dataSourceOption } from './database/dataSource';
       autoSchemaFile: join(process.cwd(), 'schema.gql'),
     }),
     TypeOrmModule.forRoot({ ...dataSourceOption }),
+    SurveyModule,
   ],
   controllers: [AppController],
   providers: [AppService],

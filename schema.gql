@@ -1,0 +1,40 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Question {
+  id: Int!
+  surveyId: Int!
+
+  """질문 내용"""
+  content: String
+
+  """선택지"""
+  select: [String!]
+
+  """선택지 별 점수"""
+  score: [Int!]
+}
+
+type Survey {
+  id: Int!
+  title: String
+  description: String
+  questions: [Question]
+}
+
+type Query {
+  getAllSurvey: [Survey!]!
+  getSurvey(input: Float!): Survey!
+}
+
+type Mutation {
+  postSurvey(input: InputSurvey!): Survey!
+  deleteSurvey(input: Float!): Boolean!
+}
+
+input InputSurvey {
+  id: Int
+  title: String!
+  description: String!
+}
