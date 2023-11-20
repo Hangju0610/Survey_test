@@ -4,6 +4,8 @@ import { AppService } from './app.service';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { dataSourceOption } from './database/dataSource';
 
 @Module({
   imports: [
@@ -16,6 +18,7 @@ import { join } from 'path';
       // schema를 Entity나 DTO를 통해 자동으로 읽어, gql 파일 생성
       autoSchemaFile: join(process.cwd(), 'schema.gql'),
     }),
+    TypeOrmModule.forRoot({ ...dataSourceOption }),
   ],
   controllers: [AppController],
   providers: [AppService],
