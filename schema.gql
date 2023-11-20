@@ -30,6 +30,7 @@ type Query {
 
 type Mutation {
   postSurvey(input: InputSurvey!): Survey!
+  deleteSurvey(input: Float!): Boolean!
 }
 
 input InputSurvey {

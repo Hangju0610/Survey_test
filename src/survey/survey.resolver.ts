@@ -25,4 +25,9 @@ export class SurveyResolver {
   async postSurvey(@Args('input') surveyData: InputSurvey) {
     return this.surveyService.postSurvey(surveyData);
   }
+
+  @Mutation(() => Boolean)
+  async deleteSurvey(@Args('input') id: number) {
+    return (await this.surveyService.deleteSurvey(id)).success;
+  }
 }
