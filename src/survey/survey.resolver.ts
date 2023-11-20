@@ -1,6 +1,6 @@
-import { Args, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { SurveyService } from './survey.service';
-import { Survey } from 'src/schema/survey.schema';
+import { InputSurvey, Survey } from 'src/schema/survey.schema';
 
 @Resolver()
 export class SurveyResolver {
@@ -17,5 +17,12 @@ export class SurveyResolver {
   @Query(() => Survey)
   async getSurvey(@Args('input') id: number) {
     return this.surveyService.getSurvey(id);
+  }
+
+  // Post Survey
+  // 데이터 생성과 수정 진행
+  @Mutation(() => Survey)
+  async postSurvey(@Args('input') surveyData: InputSurvey) {
+    return this.surveyService.postSurvey(surveyData);
   }
 }

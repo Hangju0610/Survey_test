@@ -27,3 +27,13 @@ type Query {
   getAllSurvey: [Survey!]!
   getSurvey(input: Float!): Survey!
 }
+
+type Mutation {
+  postSurvey(input: InputSurvey!): Survey!
+}
+
+input InputSurvey {
+  id: Int
+  title: String!
+  description: String!
+}
