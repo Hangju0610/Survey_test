@@ -6,7 +6,7 @@ type Question {
   id: Int!
   surveyId: Int!
 
-  """질문 내용"""
+  """문항 내용"""
   content: String
 
   """선택지"""
@@ -31,10 +31,25 @@ type Query {
 type Mutation {
   postSurvey(input: InputSurvey!): Survey!
   deleteSurvey(input: Float!): Boolean!
+  postQuestion(input: InputQuestion!): Question!
 }
 
 input InputSurvey {
   id: Int
   title: String!
   description: String!
+}
+
+input InputQuestion {
+  id: Int
+  surveyId: Int!
+
+  """문항 내용"""
+  content: String!
+
+  """선택지"""
+  select: [String!]
+
+  """선택지 별 점수"""
+  score: [Int!]
 }

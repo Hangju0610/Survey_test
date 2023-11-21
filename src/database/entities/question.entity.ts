@@ -15,7 +15,7 @@ export class QuestionEntity {
   @ManyToOne(() => SurveyEntity, (survey) => survey.questions, {
     // Survey가 없어질 경우, 모든 문항이 제거될 수 있도록 cascade를 remove로 설정
     // update가 되도 변경되도록 진행
-    cascade: ['remove', 'update'],
+    cascade: ['remove', 'update', 'insert'],
   })
   survey: SurveyEntity;
 
