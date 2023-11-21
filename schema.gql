@@ -24,8 +24,8 @@ type Survey {
 }
 
 type Query {
-  getAllSurvey: [Survey!]!
-  getSurvey(input: Float!): Survey!
+  AllSurvey: [Survey!]!
+  Survey(input: Float!): Survey!
 }
 
 type Mutation {
