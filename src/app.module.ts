@@ -8,6 +8,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { dataSourceOption } from './database/dataSource';
 import { SurveyModule } from './survey/survey.module';
 import { QuestionModule } from './question/question.module';
+import { AnswerModule } from './answer/answer.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { QuestionModule } from './question/question.module';
     TypeOrmModule.forRoot({ ...dataSourceOption }),
     SurveyModule,
     QuestionModule,
+    AnswerModule,
   ],
   controllers: [AppController],
   providers: [AppService],
