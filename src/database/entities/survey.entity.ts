@@ -1,11 +1,6 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { QuestionEntity } from './question.entity';
+import { AnswerEntity } from './answer.entity';
 
 @Entity()
 export class SurveyEntity {
@@ -19,6 +14,8 @@ export class SurveyEntity {
   description: string;
 
   @OneToMany(() => QuestionEntity, (question) => question.survey)
-  @JoinColumn()
   questions: QuestionEntity[];
+
+  @OneToMany(() => AnswerEntity, (answer) => answer.survey)
+  answers: AnswerEntity[];
 }
