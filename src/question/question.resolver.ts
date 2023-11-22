@@ -1,6 +1,11 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { InputQuestion, Question } from 'src/schema/question.schema';
+import {
+  InputQuestion,
+  InputSelect,
+  Question,
+} from 'src/schema/question.schema';
 import { QuestionService } from './question.service';
+import { BadRequestException } from '@nestjs/common';
 
 @Resolver(() => Question)
 export class QuestionResolver {
@@ -28,5 +33,16 @@ export class QuestionResolver {
   @Mutation(() => Boolean)
   async deleteQuestion(@Args('input') id: number) {
     return (await this.questionService.deleteQuestion(id)).success;
+  }
+
+  // Select API CUR 설계 진행
+  // 선택지 생성, 수정 Mutation
+  @Mutation(() => Question)
+  async postSelect(@Args('input') selectData: InputSelect) {
+    // 선택지 개수와 점수 배열 개수가 같지 않은 경우 에러 발생
+    if (selectData.select.length !== selectData.score.length) {
+      throw new BadRequestException('선택지와 점수의 개수가 같지 않습니다.');
+    }
+    return await this.questionService.updateQuestion(selectData);
   }
 }

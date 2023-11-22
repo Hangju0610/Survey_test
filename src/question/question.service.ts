@@ -1,7 +1,7 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { QuestionEntity } from 'src/database/entities/question.entity';
-import { InputQuestion } from 'src/schema/question.schema';
+import { InputQuestion, InputSelect } from 'src/schema/question.schema';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -37,10 +37,10 @@ export class QuestionService {
     return await this.questionRepository.save(data);
   }
 
-  // 문항 수정
-  async updateQuestion(questionData: InputQuestion) {
-    await this.getQuestion(questionData.id);
-    return this.questionRepository.save(questionData);
+  // 문항 수정 및 선택지 생성 및 수정 메서드
+  async updateQuestion(data: InputQuestion | InputSelect) {
+    await this.getQuestion(data.id);
+    return this.questionRepository.save(data);
   }
 
   // 문항 삭제
