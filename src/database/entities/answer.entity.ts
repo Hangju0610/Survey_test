@@ -13,7 +13,7 @@ export class AnswerEntity {
   id: number;
 
   @Column({ nullable: false })
-  userName: string;
+  user?: string;
 
   // surveyId가 출력되는지 Test 진행
   @ManyToOne(() => SurveyEntity, (survey) => survey.answers)

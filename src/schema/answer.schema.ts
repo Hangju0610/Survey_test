@@ -6,7 +6,7 @@ export class InputAnswer {
   id?: number;
 
   @Field()
-  userName: string;
+  user: string;
 
   @Field(() => Int)
   surveyId: number;
@@ -24,7 +24,7 @@ export class Answer {
   id: number;
 
   @Field({ nullable: true })
-  userName?: string;
+  user?: string;
 
   @Field(() => Int)
   surveyId: number;
