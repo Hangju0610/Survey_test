@@ -41,11 +41,11 @@ export class InputQuestion {
 @InputType()
 export class InputSelect {
   @Field(() => Int, { nullable: true })
-  id?: number;
+  id: number;
 
-  @Field(() => [String], { description: '선택지', nullable: true })
-  select?: string[];
+  @Field(() => [String], { description: '선택지' })
+  select: string[];
 
-  @Field(() => [Int], { description: '선택지 별 점수', nullable: true })
-  score?: number[];
+  @Field(() => [Int], { description: '선택지 별 점수' })
+  score: number[];
 }

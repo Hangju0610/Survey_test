@@ -26,12 +26,15 @@ type Survey {
 type Query {
   AllSurvey: [Survey!]!
   Survey(input: Float!): Survey!
+  question(input: Float!): Question!
 }
 
 type Mutation {
   postSurvey(input: InputSurvey!): Survey!
   deleteSurvey(input: Float!): Boolean!
   postQuestion(input: InputQuestion!): Question!
+  deleteQuestion(input: Float!): Boolean!
+  postSelect(input: InputSelect!): Question!
 }
 
 input InputSurvey {
@@ -46,10 +49,14 @@ input InputQuestion {
 
   """문항 내용"""
   content: String!
+}
+
+input InputSelect {
+  id: Int
 
   """선택지"""
-  select: [String!]
+  select: [String!]!
 
   """선택지 별 점수"""
-  score: [Int!]
+  score: [Int!]!
 }
