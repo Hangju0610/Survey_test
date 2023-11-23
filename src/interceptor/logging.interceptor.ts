@@ -18,7 +18,6 @@ export class LoggingInterceptor implements NestInterceptor {
     const now = Date.now();
     const gqlContext = GqlExecutionContext.create(context);
     const info = gqlContext.getInfo();
-    console.log(info);
 
     return next.handle().pipe(
       tap(() => {
