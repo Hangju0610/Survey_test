@@ -45,16 +45,16 @@ export class Answer {
   @Field(() => Int)
   surveyId: number;
 
-  @Field(() => [Int])
+  @Field(() => [Int], { nullable: true })
   questionId?: number[];
 
-  @Field(() => [Int])
+  @Field(() => [Int], { nullable: true })
   answer?: number[];
 
-  @Field(() => [Int])
+  @Field(() => [Int], { nullable: true })
   score?: number[];
 
-  @Field(() => Int)
+  @Field(() => Int, { nullable: true })
   totalScore?: number;
 
   @Field(() => Survey, { nullable: true })
