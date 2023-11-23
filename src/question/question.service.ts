@@ -1,7 +1,7 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { QuestionEntity } from 'src/database/entities/question.entity';
-import { InputQuestion, InputSelect } from 'src/schema/question.schema';
+import { CreateQuestion, UpdateQuestion } from 'src/schema/question.schema';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -11,8 +11,13 @@ export class QuestionService {
     private readonly questionRepository: Repository<QuestionEntity>,
   ) {}
 
+  // 전체 설문지 조회 메서드
+  async getAllQuestions() {
+    return this.questionRepository.find();
+  }
+
   // 설문지별 문항 조회 메서드
-  async getAllQuestions(surveyId: number) {
+  async getSurveyQuestions(surveyId: number) {
     return this.questionRepository.find({
       where: { survey: { id: surveyId } },
     });
@@ -26,21 +31,33 @@ export class QuestionService {
   }
 
   // 문항 생성
-  async createQuestion(questionData: InputQuestion) {
-    const data = this.questionRepository.create({
+  async createQuestion(data: CreateQuestion) {
+    const question = this.questionRepository.create({
       // 관계를 명시하기 위해 id 값 입력
       survey: {
-        id: questionData.surveyId,
+        id: data.surveyId,
       },
-      content: questionData.content,
+      content: data.content,
+      select: data.select,
+      score: data.score,
     });
-    return await this.questionRepository.save(data);
+    return await this.questionRepository.save(question);
   }
 
-  // 문항 수정 및 선택지 생성 및 수정 메서드
-  async updateQuestion(data: InputQuestion | InputSelect) {
-    await this.getQuestion(data.id);
-    return this.questionRepository.save(data);
+  // 문항 수정 메서드
+  async updateQuestion(data: UpdateQuestion) {
+    const result = await this.questionRepository.update(
+      { id: data.id },
+      {
+        survey: { id: data.surveyId },
+        content: data.content,
+        select: data.select,
+        score: data.score,
+      },
+    );
+    if (result.affected == 0)
+      throw new BadRequestException('문항을 찾을 수 없습니다.');
+    return await this.getQuestion(data.id);
   }
 
   // 문항 삭제
@@ -48,6 +65,6 @@ export class QuestionService {
     const result = await this.questionRepository.delete(id);
     if (result.affected == 0)
       throw new BadRequestException('문항을 찾을 수 없습니다.');
-    return { success: true };
+    return { success: true, message: '문항 삭제 완료' };
   }
 }

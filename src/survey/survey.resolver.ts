@@ -36,7 +36,7 @@ export class SurveyResolver {
   // @Parent 데코레이터를 사용해서 부모 인자를 받아올 수 있다.
   async questions(@Parent() survey: Survey) {
     const surveyId = survey.id;
-    return this.questionService.getAllQuestions(surveyId);
+    return this.questionService.getSurveyQuestions(surveyId);
   }
 
   // 설문지 생성

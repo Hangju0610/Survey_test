@@ -2,8 +2,12 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+"""문항 조회 Type"""
 type Question {
+  """문항 id"""
   id: Int!
+
+  """설문지 id"""
   surveyId: Int!
 
   """문항 내용"""
@@ -41,7 +45,8 @@ type Answer {
 type Query {
   AllSurvey: [Survey!]!
   Survey(id: Float!): Survey!
-  question(input: Float!): Question!
+  allQuestion: [Question!]!
+  question(questionId: Float!): Question!
   allAnswers: [Answer!]!
   answer(input: Float!): Answer!
 }
@@ -50,9 +55,9 @@ type Mutation {
   createSurvey(input: CreateSurvey!): Survey!
   updateSurvey(input: UpdateSurvey!): Survey!
   deleteSurvey(id: Float!): CustomResponse!
-  postQuestion(input: InputQuestion!): Question!
-  deleteQuestion(input: Float!): Boolean!
-  postSelect(input: InputSelect!): Question!
+  createQuestion(input: CreateQuestion!): Question!
+  updateQuestion(input: UpdateQuestion!): Question!
+  deleteQuestion(questionId: Float!): CustomResponse!
   createAnswer(input: InputAnswer!): Answer!
   updateAnswer(input: InputAnswer!): Answer!
   deleteAnswer(input: Float!): Boolean!
@@ -69,22 +74,36 @@ input UpdateSurvey {
   description: String
 }
 
-input InputQuestion {
-  id: Int
+"""문항 생성 Type"""
+input CreateQuestion {
   surveyId: Int!
 
   """문항 내용"""
   content: String!
-}
-
-input InputSelect {
-  id: Int
 
   """선택지"""
-  select: [String!]!
+  select: [String!]
 
   """선택지 별 점수"""
-  score: [Int!]!
+  score: [Int!]
+}
+
+"""문항 수정 Type"""
+input UpdateQuestion {
+  """문항 id"""
+  id: Int!
+
+  """설문지 id"""
+  surveyId: Int!
+
+  """문항 내용"""
+  content: String!
+
+  """선택지"""
+  select: [String!]
+
+  """선택지 별 점수"""
+  score: [Int!]
 }
 
 input InputAnswer {
