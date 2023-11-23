@@ -4,7 +4,7 @@ import * as winston from 'winston';
 
 const logDir = __dirname + '/../../logs';
 
-const dailyOptions = (level: string) => {
+export const dailyOptions = (level: string) => {
   return {
     level,
     datePattern: 'YYYY-MM-DD',
