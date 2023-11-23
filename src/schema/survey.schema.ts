@@ -18,14 +18,22 @@ export class Survey {
 
 // Input용 Schema
 @InputType()
-export class InputSurvey {
-  // 설문지 생성 시 id를 받지 않지만, 수정시에는 id를 받을 수 있도록 한다.
-  @Field(() => Int, { nullable: true })
-  id?: number;
-
+export class CreateSurvey {
   @Field()
   title: string;
 
   @Field()
+  description: string;
+}
+
+@InputType()
+export class UpdateSurvey {
+  @Field(() => Int)
+  id: number;
+
+  @Field({ nullable: true })
+  title?: string;
+
+  @Field({ nullable: true })
   description: string;
 }

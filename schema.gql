@@ -23,6 +23,11 @@ type Survey {
   questions: [Question]
 }
 
+type CustomResponse {
+  success: Boolean!
+  message: String!
+}
+
 type Answer {
   id: Int!
   user: String
@@ -35,15 +40,16 @@ type Answer {
 
 type Query {
   AllSurvey: [Survey!]!
-  Survey(input: Float!): Survey!
+  Survey(id: Float!): Survey!
   question(input: Float!): Question!
   allAnswers: [Answer!]!
   answer(input: Float!): Answer!
 }
 
 type Mutation {
-  postSurvey(input: InputSurvey!): Survey!
-  deleteSurvey(input: Float!): Boolean!
+  createSurvey(input: CreateSurvey!): Survey!
+  updateSurvey(input: UpdateSurvey!): Survey!
+  deleteSurvey(id: Float!): CustomResponse!
   postQuestion(input: InputQuestion!): Question!
   deleteQuestion(input: Float!): Boolean!
   postSelect(input: InputSelect!): Question!
@@ -52,10 +58,15 @@ type Mutation {
   deleteAnswer(input: Float!): Boolean!
 }
 
-input InputSurvey {
-  id: Int
+input CreateSurvey {
   title: String!
   description: String!
+}
+
+input UpdateSurvey {
+  id: Int!
+  title: String
+  description: String
 }
 
 input InputQuestion {
