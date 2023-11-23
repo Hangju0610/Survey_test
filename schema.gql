@@ -1,0 +1,85 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Question {
+  id: Int!
+  surveyId: Int!
+
+  """문항 내용"""
+  content: String
+
+  """선택지"""
+  select: [String!]
+
+  """선택지 별 점수"""
+  score: [Int!]
+}
+
+type Survey {
+  id: Int!
+  title: String
+  description: String
+  questions: [Question]
+}
+
+type Answer {
+  id: Int!
+  user: String
+  surveyId: Int!
+  questionId: [Int!]!
+  answer: [Int!]!
+  score: [Int!]!
+  totalScore: Int!
+}
+
+type Query {
+  AllSurvey: [Survey!]!
+  Survey(input: Float!): Survey!
+  question(input: Float!): Question!
+  allAnswers: [Answer!]!
+  answer(input: Float!): Answer!
+}
+
+type Mutation {
+  postSurvey(input: InputSurvey!): Survey!
+  deleteSurvey(input: Float!): Boolean!
+  postQuestion(input: InputQuestion!): Question!
+  deleteQuestion(input: Float!): Boolean!
+  postSelect(input: InputSelect!): Question!
+  createAnswer(input: InputAnswer!): Answer!
+  updateAnswer(input: InputAnswer!): Answer!
+  deleteAnswer(input: Float!): Boolean!
+}
+
+input InputSurvey {
+  id: Int
+  title: String!
+  description: String!
+}
+
+input InputQuestion {
+  id: Int
+  surveyId: Int!
+
+  """문항 내용"""
+  content: String!
+}
+
+input InputSelect {
+  id: Int
+
+  """선택지"""
+  select: [String!]!
+
+  """선택지 별 점수"""
+  score: [Int!]!
+}
+
+input InputAnswer {
+  id: Int
+  user: String!
+  surveyId: Int!
+  questionId: [Int!]!
+  answer: [Int!]!
+}
