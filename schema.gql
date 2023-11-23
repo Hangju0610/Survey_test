@@ -23,10 +23,22 @@ type Survey {
   questions: [Question]
 }
 
+type Answer {
+  id: Int!
+  user: String
+  surveyId: Int!
+  questionId: [Int!]!
+  answer: [Int!]!
+  score: [Int!]!
+  totalScore: Int!
+}
+
 type Query {
   AllSurvey: [Survey!]!
   Survey(input: Float!): Survey!
   question(input: Float!): Question!
+  allAnswers: [Answer!]!
+  answer(input: Float!): Answer!
 }
 
 type Mutation {
@@ -35,6 +47,9 @@ type Mutation {
   postQuestion(input: InputQuestion!): Question!
   deleteQuestion(input: Float!): Boolean!
   postSelect(input: InputSelect!): Question!
+  createAnswer(input: InputAnswer!): Answer!
+  updateAnswer(input: InputAnswer!): Answer!
+  deleteAnswer(input: Float!): Boolean!
 }
 
 input InputSurvey {
@@ -59,4 +74,12 @@ input InputSelect {
 
   """선택지 별 점수"""
   score: [Int!]!
+}
+
+input InputAnswer {
+  id: Int
+  user: String!
+  surveyId: Int!
+  questionId: [Int!]!
+  answer: [Int!]!
 }
