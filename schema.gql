@@ -45,7 +45,8 @@ type Mutation {
   postQuestion(input: InputQuestion!): Question!
   deleteQuestion(input: Float!): Boolean!
   postSelect(input: InputSelect!): Question!
-  postAnswer(input: InputAnswer!): Answer!
+  createAnswer(input: InputAnswer!): Answer!
+  updateAnswer(input: InputAnswer!): Answer!
 }
 
 input InputSurvey {
