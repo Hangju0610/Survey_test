@@ -1,31 +1,42 @@
 import { Field, InputType, Int, ObjectType } from '@nestjs/graphql';
 import { Question } from './question.schema';
 
-@ObjectType()
+@ObjectType({ description: '설문지 조회 Type' })
 export class Survey {
-  @Field(() => Int)
+  @Field(() => Int, { description: '설문지 Id' })
   id: number;
 
-  @Field({ nullable: true })
+  @Field({ nullable: true, description: '설문지 제목' })
   title?: string;
 
-  @Field({ nullable: true })
+  @Field({ nullable: true, description: '설문지 상세 요약글' })
   description?: string;
 
-  @Field(() => [Question], { nullable: 'itemsAndList' })
+  @Field(() => [Question], {
+    nullable: 'itemsAndList',
+    description: '설문지 내 문항 확인',
+  })
   questions?: Question[];
 }
 
 // Input용 Schema
-@InputType()
-export class InputSurvey {
-  // 설문지 생성 시 id를 받지 않지만, 수정시에는 id를 받을 수 있도록 한다.
-  @Field(() => Int, { nullable: true })
-  id?: number;
-
-  @Field()
+@InputType({ description: '설문지 생성 Type' })
+export class CreateSurvey {
+  @Field({ description: '설문지 제목' })
   title: string;
 
-  @Field()
+  @Field({ description: '설문지 상세 요약글' })
+  description: string;
+}
+
+@InputType({ description: '설문지 수정 Type' })
+export class UpdateSurvey {
+  @Field(() => Int, { description: '설문지 Id' })
+  id: number;
+
+  @Field({ nullable: true, description: '설문지 제목' })
+  title?: string;
+
+  @Field({ nullable: true, description: '설문지 상세 요약글' })
   description: string;
 }

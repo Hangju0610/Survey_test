@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: Survey
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    # 외부 port는 5434로 지정하여 기존 Postgres와의 충돌 방지
+    ports:
+      - '5434:5432'
+
+  app:
+    build: .
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_DATABASE: Survey
+    depends_on:
+      - db
+    ports:
+      - '4000:4000'
+
+volumes:
+  postgres_data:

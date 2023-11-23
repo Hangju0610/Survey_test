@@ -19,7 +19,7 @@ export const dailyOptions = (level: string) => {
 export const winstonLogger = WinstonModule.createLogger({
   transports: [
     new winston.transports.Console({
-      level: 'silly',
+      level: 'error',
       format: winston.format.combine(
         winston.format.timestamp(),
         utilities.format.nestLike('Survey', {
@@ -28,6 +28,6 @@ export const winstonLogger = WinstonModule.createLogger({
         }),
       ),
     }),
-    new winstonDaily(dailyOptions('silly')),
+    new winstonDaily(dailyOptions('error')),
   ],
 });

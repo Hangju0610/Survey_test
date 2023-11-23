@@ -13,5 +13,5 @@ export const dataSourceOption: DataSourceOptions & TypeOrmModuleOptions = {
   password: process.env.DB_PASSWORD || 'postgres',
   entities: [QuestionEntity, SurveyEntity, AnswerEntity],
   synchronize: true,
-  logging: true,
+  logging: false,
 };

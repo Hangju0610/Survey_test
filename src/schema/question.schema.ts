@@ -1,11 +1,11 @@
 import { Field, InputType, Int, ObjectType } from '@nestjs/graphql';
 
-@ObjectType()
+@ObjectType({ description: '문항 조회 Type' })
 export class Question {
-  @Field(() => Int)
+  @Field(() => Int, { description: '문항 id' })
   id: number;
 
-  @Field(() => Int)
+  @Field(() => Int, { description: '설문지 id' })
   surveyId?: number;
 
   @Field({ description: '문항 내용', nullable: true })
@@ -20,32 +20,35 @@ export class Question {
   score?: number[];
 }
 
-@InputType()
-export class InputQuestion {
-  @Field(() => Int, { nullable: true })
-  id?: number;
-
+@InputType({ description: '문항 생성 Type' })
+export class CreateQuestion {
   @Field(() => Int)
   surveyId: number;
 
   @Field({ description: '문항 내용' })
   content: string;
 
-  // @Field(() => [String], { description: '선택지', nullable: true })
-  // select?: string[];
-
-  // @Field(() => [Int], { description: '선택지 별 점수', nullable: true })
-  // score?: number[];
-}
-
-@InputType()
-export class InputSelect {
-  @Field(() => Int, { nullable: true })
-  id: number;
-
   @Field(() => [String], { description: '선택지' })
   select: string[];
 
   @Field(() => [Int], { description: '선택지 별 점수' })
   score: number[];
+}
+
+@InputType({ description: '문항 수정 Type' })
+export class UpdateQuestion {
+  @Field(() => Int, { description: '문항 id' })
+  id: number;
+
+  @Field(() => Int, { description: '설문지 id', nullable: true })
+  surveyId?: number;
+
+  @Field({ description: '문항 내용', nullable: true })
+  content?: string;
+
+  @Field(() => [String], { description: '선택지', nullable: true })
+  select?: string[];
+
+  @Field(() => [Int], { description: '선택지 별 점수', nullable: true })
+  score?: number[];
 }
