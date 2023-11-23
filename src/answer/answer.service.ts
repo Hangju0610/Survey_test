@@ -4,10 +4,9 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ColdObservable } from 'rxjs/internal/testing/ColdObservable';
 import { AnswerEntity } from 'src/database/entities/answer.entity';
 import { QuestionEntity } from 'src/database/entities/question.entity';
-import { InputAnswer } from 'src/schema/answer.schema';
+import { CreateAnswer, UpdateAnswer } from 'src/schema/answer.schema';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -20,7 +19,7 @@ export class AnswerService {
   ) {}
 
   // 답변 생성
-  async createAnswer(answerData: InputAnswer) {
+  async createAnswer(answerData: CreateAnswer) {
     // 콜백 함수 비동기 처리 진행
     const score = await this.measureScore(
       answerData.questionId,
@@ -45,7 +44,7 @@ export class AnswerService {
   }
 
   // 답변 수정
-  async updateAnswer(answerData: InputAnswer) {
+  async updateAnswer(answerData: UpdateAnswer) {
     const { id, surveyId, user, questionId, answer } = answerData;
     // 과거와 답변이 같은지, 같지 않은지 확인하는 작업 진행
     // 1. 전 답변을 먼저 찾는다.
@@ -119,7 +118,7 @@ export class AnswerService {
     const result = await this.answerRepository.delete(id);
     if (result.affected == 0)
       throw new NotFoundException('답변을 찾을 수 없습니다.');
-    return { success: true };
+    return { success: true, message: '답변 삭제 완료' };
   }
 
   // 점수 측정 메서드

@@ -40,6 +40,7 @@ type Answer {
   answer: [Int!]!
   score: [Int!]!
   totalScore: Int!
+  survey: Survey
 }
 
 type Query {
@@ -58,9 +59,9 @@ type Mutation {
   createQuestion(input: CreateQuestion!): Question!
   updateQuestion(input: UpdateQuestion!): Question!
   deleteQuestion(questionId: Float!): CustomResponse!
-  createAnswer(input: InputAnswer!): Answer!
-  updateAnswer(input: InputAnswer!): Answer!
-  deleteAnswer(input: Float!): Boolean!
+  createAnswer(input: CreateAnswer!): Answer!
+  updateAnswer(input: UpdateAnswer!): Answer!
+  deleteAnswer(id: Float!): CustomResponse!
 }
 
 input CreateSurvey {
@@ -106,10 +107,34 @@ input UpdateQuestion {
   score: [Int!]
 }
 
-input InputAnswer {
-  id: Int
+"""답변 생성 Type"""
+input CreateAnswer {
+  """유저 이름"""
   user: String!
+
+  """설문지 Id"""
   surveyId: Int!
+
+  """문항 Id"""
   questionId: [Int!]!
+
+  """답변 내역"""
   answer: [Int!]!
+}
+
+"""답변 업데이트 Type"""
+input UpdateAnswer {
+  id: Int!
+
+  """유저 이름"""
+  user: String
+
+  """설문지 Id"""
+  surveyId: Int
+
+  """문항 Id"""
+  questionId: [Int!]
+
+  """답변 내역"""
+  answer: [Int!]
 }

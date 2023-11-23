@@ -1,38 +1,64 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 import { AnswerService } from './answer.service';
-import { Answer, InputAnswer } from 'src/schema/answer.schema';
+import { Answer, CreateAnswer, UpdateAnswer } from 'src/schema/answer.schema';
 import { BadRequestException } from '@nestjs/common';
+import { CustomResponse } from 'src/schema/common.schema';
+import { Survey } from 'src/schema/survey.schema';
+import { SurveyService } from 'src/survey/survey.service';
 
-@Resolver()
+@Resolver(() => Answer)
 export class AnswerResolver {
-  constructor(private answerService: AnswerService) {}
+  constructor(
+    private answerService: AnswerService,
+    private surveyService: SurveyService,
+  ) {}
 
+  // 답변 생성
   @Mutation(() => Answer)
-  async createAnswer(@Args('input') answerData: InputAnswer) {
+  async createAnswer(@Args('input') answerData: CreateAnswer) {
     // 문항 개수와 답변 개수 일치여부 확인
     if (answerData.questionId.length !== answerData.answer.length)
       throw new BadRequestException('문항 수와 답변 수가 일치하지 않습니다.');
     return this.answerService.createAnswer(answerData);
   }
+
+  // 답변 수정
   @Mutation(() => Answer)
-  async updateAnswer(@Args('input') answerData: InputAnswer) {
+  async updateAnswer(@Args('input') answerData: UpdateAnswer) {
     if (answerData.questionId.length !== answerData.answer.length)
       throw new BadRequestException('문항 수와 답변 수가 일치하지 않습니다.');
     return this.answerService.updateAnswer(answerData);
   }
 
-  @Mutation(() => Boolean)
-  async deleteAnswer(@Args('input') id: number) {
-    return (await this.answerService.deleteAnswer(id)).success;
+  // 답변 삭제
+  @Mutation(() => CustomResponse)
+  async deleteAnswer(@Args('id') id: number) {
+    return await this.answerService.deleteAnswer(id);
   }
 
+  // 전체 답변 조회
   @Query(() => [Answer])
   async allAnswers() {
     return await this.answerService.allAnswers();
   }
 
+  // 단일 답변 조회
   @Query(() => Answer)
   async answer(@Args('input') id: number) {
     return await this.answerService.findAnswer(id);
+  }
+
+  //ResolveField를 통해 Survey를 찾기
+  @ResolveField(() => Survey)
+  async survey(@Parent() answer: Answer) {
+    const surveyId = answer.surveyId;
+    return this.surveyService.getSurvey(surveyId);
   }
 }
