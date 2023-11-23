@@ -1,4 +1,4 @@
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { AnswerService } from './answer.service';
 import { Answer, InputAnswer } from 'src/schema/answer.schema';
 import { BadRequestException } from '@nestjs/common';
@@ -19,5 +19,20 @@ export class AnswerResolver {
     if (answerData.questionId.length !== answerData.answer.length)
       throw new BadRequestException('문항 수와 답변 수가 일치하지 않습니다.');
     return this.answerService.updateAnswer(answerData);
+  }
+
+  @Mutation(() => Boolean)
+  async deleteAnswer(@Args('input') id: number) {
+    return (await this.answerService.deleteAnswer(id)).success;
+  }
+
+  @Query(() => [Answer])
+  async allAnswers() {
+    return await this.answerService.allAnswers();
+  }
+
+  @Query(() => Answer)
+  async answer(@Args('input') id: number) {
+    return await this.answerService.findAnswer(id);
   }
 }

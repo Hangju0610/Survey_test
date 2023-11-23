@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ColdObservable } from 'rxjs/internal/testing/ColdObservable';
 import { AnswerEntity } from 'src/database/entities/answer.entity';
@@ -96,6 +100,26 @@ export class AnswerService {
     );
     const newAnswer = this.answerRepository.findOneBy({ id });
     return newAnswer;
+  }
+
+  // 모든 답변 찾기 메서드
+  async allAnswers() {
+    return await this.answerRepository.find();
+  }
+
+  // 답변 찾기 메서드
+  async findAnswer(id: number) {
+    const answer = await this.answerRepository.findOneBy({ id });
+    if (!answer) throw new NotFoundException('답변을 찾을 수 없습니다.');
+    return answer;
+  }
+
+  // 답변 삭제 메서드
+  async deleteAnswer(id: number) {
+    const result = await this.answerRepository.delete(id);
+    if (result.affected == 0)
+      throw new NotFoundException('답변을 찾을 수 없습니다.');
+    return { success: true };
   }
 
   // 점수 측정 메서드
