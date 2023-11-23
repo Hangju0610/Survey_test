@@ -20,58 +20,124 @@ type Question {
   score: [Int!]
 }
 
+"""설문지 조회 Type"""
 type Survey {
+  """설문지 Id"""
   id: Int!
+
+  """설문지 제목"""
   title: String
+
+  """설문지 상세 요약글"""
   description: String
+
+  """설문지 내 문항 확인"""
   questions: [Question]
 }
 
+"""삭제 완료 시 응답 메세지"""
 type CustomResponse {
+  """삭제 성공 여부"""
   success: Boolean!
+
+  """삭제 메세지"""
   message: String!
 }
 
+"""답변 조회 Type"""
 type Answer {
+  """답변 Id"""
   id: Int!
+
+  """답변 유저"""
   user: String
+
+  """설문지 Id"""
   surveyId: Int!
-  questionId: [Int!]!
-  answer: [Int!]!
-  score: [Int!]!
-  totalScore: Int!
+
+  """문항 Id"""
+  questionId: [Int!]
+
+  """답변 내역"""
+  answer: [Int!]
+
+  """답변별 점수 내역"""
+  score: [Int!]
+
+  """총 답변 점수"""
+  totalScore: Int
+
+  """완료된 설문지 확인용"""
   survey: Survey
 }
 
 type Query {
+  """전체 설문지 조회"""
   AllSurvey: [Survey!]!
+
+  """단일 설문지 조회"""
   Survey(id: Float!): Survey!
+
+  """전체 문항 조회"""
   allQuestion: [Question!]!
+
+  """단일 문항 조회"""
   question(questionId: Float!): Question!
+
+  """전체 답변 조회"""
   allAnswers: [Answer!]!
+
+  """단일 답변 조회"""
   answer(input: Float!): Answer!
 }
 
 type Mutation {
+  """설문지 생성"""
   createSurvey(input: CreateSurvey!): Survey!
+
+  """설문지 수정"""
   updateSurvey(input: UpdateSurvey!): Survey!
+
+  """설문지 삭제"""
   deleteSurvey(id: Float!): CustomResponse!
+
+  """문항 생성"""
   createQuestion(input: CreateQuestion!): Question!
+
+  """문항 수정"""
   updateQuestion(input: UpdateQuestion!): Question!
+
+  """문항 삭제"""
   deleteQuestion(questionId: Float!): CustomResponse!
+
+  """답변 생성"""
   createAnswer(input: CreateAnswer!): Answer!
+
+  """답변 수정"""
   updateAnswer(input: UpdateAnswer!): Answer!
+
+  """답변 삭제"""
   deleteAnswer(id: Float!): CustomResponse!
 }
 
+"""설문지 생성 Type"""
 input CreateSurvey {
+  """설문지 제목"""
   title: String!
+
+  """설문지 상세 요약글"""
   description: String!
 }
 
+"""설문지 수정 Type"""
 input UpdateSurvey {
+  """설문지 Id"""
   id: Int!
+
+  """설문지 제목"""
   title: String
+
+  """설문지 상세 요약글"""
   description: String
 }
 

@@ -34,29 +34,29 @@ export class UpdateAnswer {
   answer?: number[];
 }
 
-@ObjectType()
+@ObjectType({ description: '답변 조회 Type' })
 export class Answer {
-  @Field(() => Int)
+  @Field(() => Int, { description: '답변 Id' })
   id: number;
 
-  @Field({ nullable: true })
+  @Field({ nullable: true, description: '답변 유저' })
   user?: string;
 
-  @Field(() => Int)
+  @Field(() => Int, { description: '설문지 Id' })
   surveyId: number;
 
-  @Field(() => [Int], { nullable: true })
+  @Field(() => [Int], { nullable: true, description: '문항 Id' })
   questionId?: number[];
 
-  @Field(() => [Int], { nullable: true })
+  @Field(() => [Int], { nullable: true, description: '답변 내역' })
   answer?: number[];
 
-  @Field(() => [Int], { nullable: true })
+  @Field(() => [Int], { nullable: true, description: '답변별 점수 내역' })
   score?: number[];
 
-  @Field(() => Int, { nullable: true })
+  @Field(() => Int, { nullable: true, description: '총 답변 점수' })
   totalScore?: number;
 
-  @Field(() => Survey, { nullable: true })
+  @Field(() => Survey, { nullable: true, description: '완료된 설문지 확인용' })
   survey?: Survey;
 }
