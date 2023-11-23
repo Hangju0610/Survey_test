@@ -81,8 +81,6 @@ export class AnswerService {
       totalScore = score.reduce((acc, cur) => {
         return acc + cur;
       }, 0);
-    } else {
-      throw new BadRequestException('변경 사항이 없습니다.');
     }
     // 4. update 진행
     await this.answerRepository.update(
