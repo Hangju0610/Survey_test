@@ -28,10 +28,10 @@ export class CreateQuestion {
   @Field({ description: '문항 내용' })
   content: string;
 
-  @Field(() => [String], { description: '선택지', nullable: true })
+  @Field(() => [String], { description: '선택지' })
   select: string[];
 
-  @Field(() => [Int], { description: '선택지 별 점수', nullable: true })
+  @Field(() => [Int], { description: '선택지 별 점수' })
   score: number[];
 }
 
@@ -40,10 +40,10 @@ export class UpdateQuestion {
   @Field(() => Int, { description: '문항 id' })
   id: number;
 
-  @Field(() => Int, { description: '설문지 id' })
+  @Field(() => Int, { description: '설문지 id', nullable: true })
   surveyId?: number;
 
-  @Field({ description: '문항 내용' })
+  @Field({ description: '문항 내용', nullable: true })
   content?: string;
 
   @Field(() => [String], { description: '선택지', nullable: true })

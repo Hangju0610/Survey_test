@@ -149,10 +149,10 @@ input CreateQuestion {
   content: String!
 
   """선택지"""
-  select: [String!]
+  select: [String!]!
 
   """선택지 별 점수"""
-  score: [Int!]
+  score: [Int!]!
 }
 
 """문항 수정 Type"""
@@ -161,10 +161,10 @@ input UpdateQuestion {
   id: Int!
 
   """설문지 id"""
-  surveyId: Int!
+  surveyId: Int
 
   """문항 내용"""
-  content: String!
+  content: String
 
   """선택지"""
   select: [String!]

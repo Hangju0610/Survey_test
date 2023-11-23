@@ -19,7 +19,7 @@ import { dailyOptions } from './utils/winston.util';
     WinstonModule.forRoot({
       transports: [
         new winston.transports.Console({
-          level: 'silly',
+          level: 'error',
           format: winston.format.combine(
             winston.format.timestamp(),
             utilities.format.nestLike('Survey', {
@@ -28,7 +28,7 @@ import { dailyOptions } from './utils/winston.util';
             }),
           ),
         }),
-        new winstonDaily(dailyOptions('silly')),
+        new winstonDaily(dailyOptions('error')),
       ],
     }),
     // GraphQL을 사용하기 위한 초기 설정
