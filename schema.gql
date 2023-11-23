@@ -37,6 +37,8 @@ type Query {
   AllSurvey: [Survey!]!
   Survey(input: Float!): Survey!
   question(input: Float!): Question!
+  allAnswers: [Answer!]!
+  answer(input: Float!): Answer!
 }
 
 type Mutation {
@@ -47,6 +49,7 @@ type Mutation {
   postSelect(input: InputSelect!): Question!
   createAnswer(input: InputAnswer!): Answer!
   updateAnswer(input: InputAnswer!): Answer!
+  deleteAnswer(input: Float!): Boolean!
 }
 
 input InputSurvey {

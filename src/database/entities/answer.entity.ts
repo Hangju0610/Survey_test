@@ -1,9 +1,9 @@
 import {
   Column,
   Entity,
-  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
+  RelationId,
 } from 'typeorm';
 import { SurveyEntity } from './survey.entity';
 
@@ -17,8 +17,10 @@ export class AnswerEntity {
 
   // surveyId가 출력되는지 Test 진행
   @ManyToOne(() => SurveyEntity, (survey) => survey.answers)
-  @JoinColumn({ name: 'surveyId', referencedColumnName: 'id' })
   survey: SurveyEntity;
+
+  @RelationId((answer: AnswerEntity) => answer.survey)
+  surveyId: number;
 
   @Column('int', { array: true, nullable: false })
   questionId: number[];
