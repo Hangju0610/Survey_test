@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { winstonLogger } from './utils/winston.util';
-import { LoggingInterceptor } from './interceptor/logging.interceptor';
+import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 
 async function bootstrap() {
