@@ -3,6 +3,7 @@ import {
   ExecutionContext,
   Inject,
   Injectable,
+  LoggerService,
   NestInterceptor,
 } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
@@ -13,38 +14,22 @@ import { Logger } from 'winston';
 
 @Injectable()
 export class LoggingInterceptor implements NestInterceptor {
-  constructor(@Inject(WINSTON_MODULE_PROVIDER) private logger: Logger) {}
+  constructor(private readonly logger: LoggerService) {}
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     const now = Date.now();
     const gqlContext = GqlExecutionContext.create(context);
+    const ip = gqlContext.getContext().req.ip;
     const info = gqlContext.getInfo();
+    // console.log(info);
 
     return next.handle().pipe(
       tap(() => {
         const responseTime = Date.now() - now;
 
-        this.logger.info(
-          `${info.path.typename}: ${info.fieldName} - ${responseTime}ms`,
-          {
-            context: 'LoggingInterceptor',
-            timestamp: new Date().toISOString(),
-          },
+        this.logger.log(
+          `IP: ${ip} - ${responseTime}ms`,
+          `${info.path.typename}: ${info.fieldName}`,
         );
-      }),
-      catchError((error) => {
-        this.logger.error(
-          `Error in ${info.path.typename}: ${info.fieldName} - Error: ${error.message}`,
-          {
-            context: 'LoggingInterceptor',
-            timestamp: new Date().toISOString(),
-            error: {
-              message: error.message,
-              stack: error.stack,
-            },
-          },
-        );
-
-        return throwError(error);
       }),
     );
   }

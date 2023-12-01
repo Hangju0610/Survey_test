@@ -4,4 +4,5 @@ export enum errorCode {
   NotFoundAnswer = '0003',
   NotEqualSelectAndScore = '0004',
   NotEqualQuestionAndAnswer = '0005',
+  UnCatched = '9999',
 }

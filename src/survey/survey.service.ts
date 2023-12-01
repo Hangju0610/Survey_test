@@ -1,5 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { SurveyNotFoundException } from 'src/common/exceptions/survey.exception';
 import { SurveyEntity } from 'src/database/entities/survey.entity';
 import { CreateSurvey, UpdateSurvey } from 'src/schema/survey.schema';
 import { Repository } from 'typeorm';
@@ -17,7 +18,7 @@ export class SurveyService {
 
   async getSurvey(id: number) {
     const survey = await this.surveyRepository.findOneBy({ id });
-    if (!survey) throw new BadRequestException('설문지를 찾을 수 없습니다.');
+    if (!survey) throw new SurveyNotFoundException();
     return survey;
   }
 
