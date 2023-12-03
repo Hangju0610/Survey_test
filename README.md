@@ -54,4 +54,9 @@ Typescript, Nest.js, GraphQL, typeORM, PostgreSQL, Winston
 
 ### Survey 관련 Refactor
 
-1. **복수형 문항 제작**
+1. **복수답안 문항 제작(Doing)**
+   1. JSON.parse, JSON.stringify를 통한 직렬화 전략
+   - answer Array 내 복수 답안은 Array로 구현 (Ex: answer [1,2,3,[1,2],1])
+   - GraphQL Custom Scalar type 구현
+   - https://docs.nestjs.com/graphql/scalars#scalars
+   - https://www.apollographql.com/docs/apollo-server/schema/custom-scalars/#example-the-date-scalar
