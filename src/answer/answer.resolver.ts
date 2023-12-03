@@ -8,10 +8,10 @@ import {
 } from '@nestjs/graphql';
 import { AnswerService } from './answer.service';
 import { Answer, CreateAnswer, UpdateAnswer } from 'src/schema/answer.schema';
-import { BadRequestException } from '@nestjs/common';
 import { CustomResponse } from 'src/schema/common.schema';
 import { Survey } from 'src/schema/survey.schema';
 import { SurveyService } from 'src/survey/survey.service';
+import { NotEqualQuestionAndAnswer } from 'src/common/exceptions/answer.exception';
 
 @Resolver(() => Answer)
 export class AnswerResolver {
@@ -25,7 +25,7 @@ export class AnswerResolver {
   async createAnswer(@Args('input') answerData: CreateAnswer) {
     // 문항 개수와 답변 개수 일치여부 확인
     if (answerData.questionId.length !== answerData.answer.length)
-      throw new BadRequestException('문항 수와 답변 수가 일치하지 않습니다.');
+      throw new NotEqualQuestionAndAnswer();
     return this.answerService.createAnswer(answerData);
   }
 
@@ -33,7 +33,7 @@ export class AnswerResolver {
   @Mutation(() => Answer, { description: '답변 수정' })
   async updateAnswer(@Args('input') answerData: UpdateAnswer) {
     if (answerData.questionId.length !== answerData.answer.length)
-      throw new BadRequestException('문항 수와 답변 수가 일치하지 않습니다.');
+      throw new NotEqualQuestionAndAnswer();
     return this.answerService.updateAnswer(answerData);
   }
 

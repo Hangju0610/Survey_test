@@ -1,5 +1,6 @@
+import { GraphQLErrorExtensions } from 'graphql';
+
 export interface IBaseException {
-  errorCode: string;
   message: string;
-  statusCode: number;
+  extensions: GraphQLErrorExtensions;
 }

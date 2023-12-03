@@ -6,6 +6,7 @@ import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
+    // Nest에 내장되어 있는 logger에 winstonLogger 주입
     logger: winstonLogger,
   });
   app.useGlobalFilters(new AllExceptionFilter(winstonLogger));

@@ -1,4 +1,5 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import { NotFoundQuestionException } from './../common/exceptions/question.exception';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { QuestionEntity } from 'src/database/entities/question.entity';
 import { CreateQuestion, UpdateQuestion } from 'src/schema/question.schema';
@@ -26,7 +27,7 @@ export class QuestionService {
   // 단일 문항 조회 메서드
   async getQuestion(id: number) {
     const question = await this.questionRepository.findOneBy({ id });
-    if (!question) throw new BadRequestException('문항을 찾을 수 없습니다.');
+    if (!question) throw new NotFoundQuestionException();
     return question;
   }
 
@@ -55,16 +56,14 @@ export class QuestionService {
         score: data.score,
       },
     );
-    if (result.affected == 0)
-      throw new BadRequestException('문항을 찾을 수 없습니다.');
+    if (result.affected == 0) throw new NotFoundQuestionException();
     return await this.getQuestion(data.id);
   }
 
   // 문항 삭제
   async deleteQuestion(id: number) {
     const result = await this.questionRepository.delete(id);
-    if (result.affected == 0)
-      throw new BadRequestException('문항을 찾을 수 없습니다.');
+    if (result.affected == 0) throw new NotFoundQuestionException();
     return { success: true, message: '문항 삭제 완료' };
   }
 }
