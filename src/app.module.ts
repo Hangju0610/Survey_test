@@ -1,6 +1,5 @@
+import { AppResolver } from './app.resolver';
 import { Logger, Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
@@ -9,28 +8,9 @@ import { dataSourceOption } from './database/dataSource';
 import { SurveyModule } from './survey/survey.module';
 import { QuestionModule } from './question/question.module';
 import { AnswerModule } from './answer/answer.module';
-import { WinstonModule, utilities } from 'nest-winston';
-import * as winston from 'winston';
-import * as winstonDaily from 'winston-daily-rotate-file';
-import { dailyOptions } from './utils/winston.util';
 
 @Module({
   imports: [
-    WinstonModule.forRoot({
-      transports: [
-        new winston.transports.Console({
-          level: 'error',
-          format: winston.format.combine(
-            winston.format.timestamp(),
-            utilities.format.nestLike('Survey', {
-              prettyPrint: true,
-              colors: true,
-            }),
-          ),
-        }),
-        new winstonDaily(dailyOptions('error')),
-      ],
-    }),
     // GraphQL을 사용하기 위한 초기 설정
     GraphQLModule.forRoot<ApolloDriverConfig>({
       // 서버는 apollo 서버를 사용
@@ -45,7 +25,7 @@ import { dailyOptions } from './utils/winston.util';
     QuestionModule,
     AnswerModule,
   ],
-  controllers: [AppController],
-  providers: [AppService, Logger],
+  providers: [AppResolver, Logger],
+  exports: [Logger],
 })
 export class AppModule {}

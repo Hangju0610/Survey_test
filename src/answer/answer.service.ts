@@ -1,9 +1,6 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { NotFoundAnswerException } from 'src/common/exceptions/answer.exception';
 import { AnswerEntity } from 'src/database/entities/answer.entity';
 import { QuestionEntity } from 'src/database/entities/question.entity';
 import { CreateAnswer, UpdateAnswer } from 'src/schema/answer.schema';
@@ -109,15 +106,14 @@ export class AnswerService {
   // 답변 찾기 메서드
   async findAnswer(id: number) {
     const answer = await this.answerRepository.findOneBy({ id });
-    if (!answer) throw new NotFoundException('답변을 찾을 수 없습니다.');
+    if (!answer) throw new NotFoundAnswerException();
     return answer;
   }
 
   // 답변 삭제 메서드
   async deleteAnswer(id: number) {
     const result = await this.answerRepository.delete(id);
-    if (result.affected == 0)
-      throw new NotFoundException('답변을 찾을 수 없습니다.');
+    if (result.affected == 0) throw new NotFoundAnswerException();
     return { success: true, message: '답변 삭제 완료' };
   }
 

@@ -72,6 +72,8 @@ type Answer {
 }
 
 type Query {
+  test: String!
+
   """전체 설문지 조회"""
   AllSurvey: [Survey!]!
 
