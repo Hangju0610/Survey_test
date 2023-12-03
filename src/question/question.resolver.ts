@@ -5,8 +5,8 @@ import {
   UpdateQuestion,
 } from 'src/schema/question.schema';
 import { QuestionService } from './question.service';
-import { BadRequestException } from '@nestjs/common';
 import { CustomResponse } from 'src/schema/common.schema';
+import { NotEqualSelectAndScoreException } from 'src/common/exceptions/question.exception';
 
 @Resolver(() => Question)
 export class QuestionResolver {
@@ -29,7 +29,7 @@ export class QuestionResolver {
   async createQuestion(@Args('input') createQuestionData: CreateQuestion) {
     // 선택지 개수와 점수 배열 개수가 같지 않은 경우 에러 발생
     if (createQuestionData.select.length !== createQuestionData.score.length) {
-      throw new BadRequestException('선택지와 점수의 개수가 같지 않습니다.');
+      throw new NotEqualSelectAndScoreException();
     }
     return this.questionService.createQuestion(createQuestionData);
   }
@@ -38,7 +38,7 @@ export class QuestionResolver {
   async updateQuestion(@Args('input') updateQuestionData: UpdateQuestion) {
     // 선택지 개수와 점수 배열 개수가 같지 않은 경우 에러 발생
     if (updateQuestionData.select.length !== updateQuestionData.score.length) {
-      throw new BadRequestException('선택지와 점수의 개수가 같지 않습니다.');
+      throw new NotEqualSelectAndScoreException();
     }
     return this.questionService.updateQuestion(updateQuestionData);
   }
