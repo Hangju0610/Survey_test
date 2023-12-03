@@ -13,7 +13,7 @@ export class CreateAnswer {
   questionId: number[];
 
   @Field(() => [Int], { description: '답변 내역' })
-  answer: number[];
+  answer: (number | number[])[];
 }
 
 @InputType({ description: '답변 업데이트 Type' })
@@ -31,7 +31,7 @@ export class UpdateAnswer {
   questionId?: number[];
 
   @Field(() => [Int], { description: '답변 내역', nullable: true })
-  answer?: number[];
+  answer?: (number | number[])[];
 }
 
 @ObjectType({ description: '답변 조회 Type' })
