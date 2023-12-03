@@ -52,6 +52,11 @@ Typescript, Nest.js, GraphQL, typeORM, PostgreSQL, Winston
    - app에서 처리되지 않은 에러처리의 경우 Error로 남겨두며, StackTrace를 남겨 신속한 대응을 할 수 있도록 Log에 기록
    - 추후 slack이나 APM Tool(Sentry, Elastic APM)을 적용하여 알람 기능 및 Logger 대체 예정
 
+- Blog 정리 내역
+  - https://hangju95.tistory.com/entry/NestJS-Winston-Logger-%EC%B4%88%EA%B8%B0-%EC%84%A4%EC%A0%95-%EB%B0%8F-Logger-%EC%82%AC%EC%9A%A9
+  - https://hangju95.tistory.com/entry/NestJS-Logger-Interceptor-%EA%B5%AC%ED%98%84
+  - https://hangju95.tistory.com/entry/NestJS-Custom-Exception-%EA%B5%AC%ED%98%84
+
 ### Survey 관련 Refactor
 
 1. **복수답안 문항 제작(Doing)**
